@@ -1,0 +1,8 @@
+const name = "My fantastic command";
+const description = "A description of the command (not used atm)";
+const execute = (message, args) => {
+    // [Object] message: all data about the received message
+    // [Array]  args: arguments of the command (typed command not included)
+};
+
+export { name, description, execute };

@@ -1,0 +1,22 @@
+{
+  "name": "NaoMarvin",
+  "version": "1.0.0",
+  "description": "Epitech Berlin Discord server bot",
+  "type": "module",
+  "main": "app.js",
+  "repository": "git@github.com:Dynnasty/NaoMarvin.git",
+  "author": "Antoine Rieuse",
+  "scripts": {
+    "start": "node app.js",
+    "dev": "nodemon app.js"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "discord.js": "^12.5.3",
+    "dotenv": "^10.0.0",
+    "nodemailer": "^6.6.3",
+    "nodemon": "^2.0.12",
+    "sqlite3": "^5.0.2",
+    "uuidv4": "^6.2.12"
+  }
+}

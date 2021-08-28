@@ -31,7 +31,7 @@ const get_sql = (message, callback) => {
 }
 
 const execute = (message, args) => {
-    if (message.channel.id === process.env.BOT_STUFF_CHANNEL_ID) {
+    if (message.channel.id === process.env.BOT_STUFF_CHANNEL_ID || message.channel.id === process.env.ADMIN_BOT_STUFF_CHANNEL_ID) {
         if (message.member.roles.cache.has(process.env.BOT_ADMIN_ROLE_ID)) {
             get_sql(message, function(result) {
                 display_sql(message, result);

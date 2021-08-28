@@ -37,7 +37,7 @@ const display_infos = (message, given_username) => {
 }
 
 const execute = (message, args) => {
-    if (message.channel.id === process.env.BOT_STUFF_CHANNEL_ID) {
+    if (message.channel.id === process.env.BOT_STUFF_CHANNEL_ID || message.channel.id === process.env.ADMIN_BOT_STUFF_CHANNEL_ID) {
         if (message.member.roles.cache.has(process.env.BOT_ADMIN_ROLE_ID)) {
             if (args.length === 1) {
                 display_infos(message, args[0] + '@' + process.env.EMAILS_DOMAIN);

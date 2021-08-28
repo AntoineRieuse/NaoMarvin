@@ -1,6 +1,5 @@
 import sqlite3 from 'sqlite3';
 import nodemailer from 'nodemailer';
-// import { is_ad_bot_admin } from '../core/users_managmt.js'
 
 const name = "unlink";
 const description = "Admins: unlink Epitech and Discord account of a specific user";
@@ -54,7 +53,7 @@ const rm_db = (message, given_username) => {
 };
 
 const execute = (message, args) => {
-    if (message.channel.id === process.env.BOT_STUFF_CHANNEL_ID) {
+    if (message.channel.id === process.env.BOT_STUFF_CHANNEL_ID || message.channel.id === process.env.ADMIN_BOT_STUFF_CHANNEL_ID) {
         if (message.member.roles.cache.has(process.env.BOT_ADMIN_ROLE_ID)) {
             if (args.length === 1) {
                 const given_username = args[0] + '@' + process.env.EMAILS_DOMAIN;

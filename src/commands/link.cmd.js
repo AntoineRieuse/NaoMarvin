@@ -53,7 +53,7 @@ const insert_db = (message, username) => {
 };
 
 const execute = (message, args) => {
-    if (message.channel.id === process.env.BOT_STUFF_CHANNEL_ID) {
+    if (message.channel.id === process.env.BOT_STUFF_CHANNEL_ID || message.channel.id === process.env.ADMIN_BOT_STUFF_CHANNEL_ID) {
         if (args.length === 1) {
             const username = args[0] + '@' + process.env.EMAILS_DOMAIN;
 

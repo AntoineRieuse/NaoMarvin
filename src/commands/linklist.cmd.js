@@ -5,7 +5,7 @@ const name = "linklist";
 const description = "List all linked Epitech accounts";
 
 const execute = (message, args) => {
-    if (message.channel.id === process.env.BOT_STUFF_CHANNEL_ID) {
+    if (message.channel.id === process.env.BOT_STUFF_CHANNEL_ID || message.channel.id === process.env.ADMIN_BOT_STUFF_CHANNEL_ID) {
             if (message.member.roles.cache.has(process.env.BOT_ADMIN_ROLE_ID)) {
             const db = new sqlite3.Database('./sql/db.sql');
             db.all("SELECT discord_id, ad_username FROM users;", [], async (err, rows) => {

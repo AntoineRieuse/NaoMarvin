@@ -35,3 +35,7 @@ yarn-error.log*
 
 # Docker
 docker-compose.yml
+
+# Git
+.git
+.gitignore

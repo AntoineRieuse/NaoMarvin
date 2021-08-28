@@ -42,9 +42,11 @@ const insert_db = (message, username) => {
             console.log('link : link requested for', username);
             send_email(username, token);
             message.reply(`an email with a token has been sent to ${username}. Use ${process.env.CMD_PREFIX}token <token> to finish the linking :wink:`);
-        } else {
+        } else if (rows[0].discord_id != null) {
             const user = message.guild.client.users.cache.get(rows[0].discord_id);
             message.reply(`this AD account is already linked to ${user.tag}`);
+        } else {
+            message.reply(`link process already started for this AD account`);
         }
     });
     db.close();

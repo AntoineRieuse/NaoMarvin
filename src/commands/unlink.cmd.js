@@ -35,13 +35,14 @@ var transporter = nodemailer.createTransport({
 
 const rm_db = (message, given_username) => {
     const db = new sqlite3.Database('./sql/db.sql');
-    db.all("SELECT discord_id, linked FROM users WHERE ad_username='"+ given_username +"';", [], (err, rows) => {
+    db.all("SELECT discord_id, linked FROM users WHERE ad_username='"+ given_username +"';", [], async (err, rows) => {
         if (rows != "") {
             db.run("DELETE FROM users WHERE ad_username='"+ given_username +"';");
             console.log('unlink : unlink done for', given_username);
             send_email(given_username);
             if (rows[0].linked == 1) {
-                message.reply(`AD account ${given_username} has been sucessfully unlinked`);
+                const user = await message.guild.client.users.fetch(rows[0].discord_id);
+                message.reply(`AD account ${given_username} and Discord account ${await message.guild.client.users.cache.get(user.id)} has been sucessfully unlinked`);
             } else {
                 message.reply(`linking of AD account ${given_username} has been sucessfully canceled`);
             }

@@ -26,7 +26,7 @@ const display_infos = (message, given_username) => {
                 .setThumbnail(process.env.ICON_URL)
                 .setFooter(process.env.SERVER_NAME);
 
-            infosEmbed.addField("Email", given_username + '@' + process.env.EMAILS_DOMAIN);
+            infosEmbed.addField("Email", given_username);
             if (db_datas.linked === 1) {
                 const user = await message.guild.client.users.fetch(db_datas.discord_id);
                 infosEmbed.addField("Discord account", await message.guild.client.users.cache.get(user.id));

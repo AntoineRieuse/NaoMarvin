@@ -3,7 +3,7 @@ import sqlite3 from 'sqlite3';
 import { username_to_disName } from '../core/users_managmt.js';
 
 const name = "status";
-const description = "Get status about an Epitech user";
+const description = `Get status about an ${process.env.COMPANY_NAME} user`;
 
 const get_db_infos = (message, given_username, callback) => {
     const db = new sqlite3.Database('./sql/db.sql');

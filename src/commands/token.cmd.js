@@ -2,7 +2,7 @@ import sqlite3 from 'sqlite3';
 import { username_to_disName } from '../core/users_managmt.js';
 
 const name = "token";
-const description = "To provide the token into email to finish the linking of Epitech and Discord accounts";
+const description = `To provide the token into email to finish the linking of ${process.env.COMPANY_NAME} and Discord accounts`;
 
 const check_token = (message, given_token) => {
     const db = new sqlite3.Database('./sql/db.sql');
@@ -12,7 +12,7 @@ const check_token = (message, given_token) => {
             db.run("UPDATE users SET discord_id='"+ message.member.user.id +"' WHERE token='"+ given_token +"'");
             console.log('token : token accepted for', message.member.user.tag);
             db.run("UPDATE users SET linked='1' WHERE token='"+ given_token +"'");
-            message.reply(`your AD account as been linked! :partying_face:`);
+            message.reply(`your ${process.env.COMPANY_NAME} account as been linked! :partying_face:`);
             message.member.setNickname(username_to_disName(rows[0].ad_username));
             message.member.roles.add(role);
         } else {

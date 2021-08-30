@@ -3,7 +3,7 @@ import sqlite3 from 'sqlite3';
 import nodemailer from 'nodemailer';
 
 const name = "link";
-const description = "Link Epitech and Discord acounts";
+const description = `Link ${process.env.COMPANY_NAME} and Discord accounts`;
 
 var transporter = nodemailer.createTransport({
   host: process.env.SMTP_SERVER,
@@ -18,7 +18,7 @@ var transporter = nodemailer.createTransport({
 
 const send_email = (username, token) => {
     var mailOptions = {
-        from: `"${process.env.BOT_NAME}" <infos@rieuse.fr>`,
+        from: `"${process.env.BOT_NAME}" <${process.env.EMAIL_USER}>`,
         to: username,
         subject: 'Discord account link token',
         text: token
@@ -44,9 +44,9 @@ const insert_db = (message, username) => {
             message.reply(`an email with a token has been sent to ${username}. Use ${process.env.CMD_PREFIX}token <token> to finish the linking :wink:`);
         } else if (rows[0].discord_id != null) {
             const user = message.guild.client.users.cache.get(rows[0].discord_id);
-            message.reply(`this AD account is already linked to ${user.tag}`);
+            message.reply(`this ${process.env.COMPANY_NAME} account is already linked to ${user.tag}`);
         } else {
-            message.reply(`link process already started for this AD account`);
+            message.reply(`link process already started for this ${process.env.COMPANY_NAME} account`);
         }
     });
     db.close();

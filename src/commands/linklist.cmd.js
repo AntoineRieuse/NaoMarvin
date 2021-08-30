@@ -2,7 +2,7 @@ import Discord from "discord.js";
 import sqlite3 from 'sqlite3';
 
 const name = "linklist";
-const description = "List all linked Epitech accounts";
+const description = `List all linked ${process.env.COMPANY_NAME} accounts`;
 
 const execute = (message, args) => {
     if (message.channel.id === process.env.BOT_STUFF_CHANNEL_ID || message.channel.id === process.env.ADMIN_BOT_STUFF_CHANNEL_ID) {
@@ -12,7 +12,7 @@ const execute = (message, args) => {
                 var cur_user;
                 const helpEmbed = new Discord.MessageEmbed()
                 .setColor("#2699e0")
-                .setTitle("Epitech accounts linked")
+                .setTitle(`${process.env.COMPANY_NAME} accounts linked`)
                 .setThumbnail(process.env.ICON_URL)
                 .setFooter(process.env.SERVER_NAME);
                 if (rows != "" && typeof rows != 'undefined') {

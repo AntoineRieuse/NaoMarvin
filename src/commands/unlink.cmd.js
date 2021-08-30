@@ -2,7 +2,7 @@ import sqlite3 from 'sqlite3';
 import nodemailer from 'nodemailer';
 
 const name = "unlink";
-const description = "Admins: unlink Epitech and Discord account of a specific user";
+const description = `Admins: unlink ${process.env.COMPANY_NAME} and Discord account of a specific user`;
 
 var transporter = nodemailer.createTransport({
     host: process.env.SMTP_SERVER,
@@ -41,15 +41,15 @@ const rm_db = (message, given_username, user_to_remove) => {
             console.log('unlink : unlink done for', given_username);
             send_email(given_username);
             if (rows[0].linked == 1) {
-                const user = await message.guild.client.users.fetch(rows[0].discord_id);
-                message.reply(`Epitech account ${given_username} and Discord account ${await message.guild.client.users.cache.get(user.id)} has been sucessfully unlinked`);
+                const get_user = await message.guild.client.users.fetch(rows[0].discord_id);
+                message.reply(`${process.env.COMPANY_NAME} account ${given_username} and Discord account ${await message.guild.client.users.cache.get(get_user.id)} has been sucessfully unlinked`);
                 await user_to_remove.setNickname(null);
                 await user_to_remove.roles.remove(role);
             } else {
-                message.reply(`linking of Epitech account ${given_username} has been sucessfully canceled`);
+                message.reply(`linking of ${process.env.COMPANY_NAME} account ${given_username} has been sucessfully canceled`);
             }
         } else {
-            message.reply(`this Epitech account is not linked to any Discord account`);
+            message.reply(`this ${process.env.COMPANY_NAME} account is not linked to any Discord account`);
         }
     });
     db.close();

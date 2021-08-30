@@ -32,8 +32,9 @@ var transporter = nodemailer.createTransport({
       });
 }
 
-const rm_db = (message, given_username) => {
+const rm_db = (message, given_username, user_to_remove) => {
     const db = new sqlite3.Database('./sql/db.sql');
+    const role = message.guild.roles.cache.find(r => r.id === process.env.VERIFIED_ROLE_ID);
     db.all("SELECT discord_id, linked FROM users WHERE ad_username='"+ given_username +"';", [], async (err, rows) => {
         if (rows != "") {
             db.run("DELETE FROM users WHERE ad_username='"+ given_username +"';");
@@ -41,12 +42,14 @@ const rm_db = (message, given_username) => {
             send_email(given_username);
             if (rows[0].linked == 1) {
                 const user = await message.guild.client.users.fetch(rows[0].discord_id);
-                message.reply(`AD account ${given_username} and Discord account ${await message.guild.client.users.cache.get(user.id)} has been sucessfully unlinked`);
+                message.reply(`Epitech account ${given_username} and Discord account ${await message.guild.client.users.cache.get(user.id)} has been sucessfully unlinked`);
+                await user_to_remove.setNickname(null);
+                await user_to_remove.roles.remove(role);
             } else {
-                message.reply(`linking of AD account ${given_username} has been sucessfully canceled`);
+                message.reply(`linking of Epitech account ${given_username} has been sucessfully canceled`);
             }
         } else {
-            message.reply(`this AD account is not linked to any Discord account`);
+            message.reply(`this Epitech account is not linked to any Discord account`);
         }
     });
     db.close();
@@ -55,11 +58,12 @@ const rm_db = (message, given_username) => {
 const execute = (message, args) => {
     if (message.channel.id === process.env.BOT_STUFF_CHANNEL_ID || message.channel.id === process.env.ADMIN_BOT_STUFF_CHANNEL_ID) {
         if (message.member.roles.cache.has(process.env.BOT_ADMIN_ROLE_ID)) {
-            if (args.length === 1) {
+            if (args.length === 2) {
                 const given_username = args[0] + '@' + process.env.EMAILS_DOMAIN;
-                rm_db(message, given_username);
+                const user_to_remove = message.mentions.members.first()
+                rm_db(message, given_username, user_to_remove);
             } else {
-                message.reply(`you did an error in your syntax :confused:. Please use ${process.env.CMD_PREFIX}unlink <AD username>`);
+                message.reply(`you did an error in your syntax :confused:. Please use ${process.env.CMD_PREFIX}unlink <firstname(int).lastname> @<Discord user>`);
             }
         } else {
             message.reply("Woow... you can't do that :disappointed_relieved:");

@@ -1,7 +1,7 @@
 import sqlite3 from 'sqlite3';
 
 const name = "setschedule";
-const description = "Update school's opening hours";
+const description = "Admins: Update school's opening hours";
 
 const insert_db = (message, schedule) => {
     const db = new sqlite3.Database('./sql/extra_db.sql');

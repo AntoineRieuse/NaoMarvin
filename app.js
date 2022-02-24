@@ -2,6 +2,7 @@ import dotenv from "dotenv";
 import { readdirSync } from "fs";
 import Discord from "discord.js";
 import sqlite3 from 'sqlite3';
+import { background_tasks } from './src/core/background_tasks.js';
 
 // Getting .env config
 dotenv.config();
@@ -28,6 +29,7 @@ users_db.close();
 
 const extra_db = new sqlite3.Database('./sql/extra_db.sql');
 extra_db.run(`CREATE TABLE IF NOT EXISTS schedule (
+        school_status INT NOT NULL DEFAULT 0,
         monday TEXT NOT NULL DEFAULT 0,
         tuesday TEXT NOT NULL DEFAULT 0,
         wednesday TEXT NOT NULL DEFAULT 0,
@@ -38,7 +40,7 @@ extra_db.run(`CREATE TABLE IF NOT EXISTS schedule (
       );`);
 extra_db.all("SELECT * FROM schedule;", [], (err, rows) => {
   if (rows == "") { 
-    extra_db.run(`INSERT INTO schedule (monday, tuesday, wednesday, thursday, friday, saturday, sunday) VALUES ('09:00 - 18:00','09:00 - 18:00','09:00 - 18:00',
+    extra_db.run(`INSERT INTO schedule (school_status, monday, tuesday, wednesday, thursday, friday, saturday, sunday) VALUES ('0','09:00 - 18:00','09:00 - 18:00','09:00 - 18:00',
     '09:00 - 18:00','09:00 - 18:00','0 - 0','0 - 0')`);
   }
 });
@@ -59,6 +61,7 @@ const commands = commandFiles.map((file) =>
 Bot.on("ready", () => {
   console.log(`Logged in as ${Bot.user.tag}`);
   console.log(`Commands prefix set to '${prefix}'`);
+  background_tasks(Bot);
 });
 
 

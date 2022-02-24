@@ -25,7 +25,6 @@ const display_infos = (message) => {
                     schedule[day] = "Closed";
                 }
             });
-            // console.log(schedule);
             infosEmbed.addField("Monday", schedule.monday);
             infosEmbed.addField("Tuesday", schedule.tuesday);
             infosEmbed.addField("Wednesday", schedule.wednesday);

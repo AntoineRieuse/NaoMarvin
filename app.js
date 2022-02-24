@@ -17,14 +17,26 @@ const commandFiles = readdirSync("./src/commands").filter((file) =>
 );
 
 // Load DBs
-const db = new sqlite3.Database('./sql/db.sql');
-db.run(`CREATE TABLE IF NOT EXISTS users (
+const users_db = new sqlite3.Database('./sql/db.sql');
+users_db.run(`CREATE TABLE IF NOT EXISTS users (
         ad_username TEXT NOT NULL,
         discord_id TEXT,
         token TEXT NOT NULL,
         linked INT NOT NULL DEFAULT 0
       );`);
-db.close();
+users_db.close();
+
+const extra_db = new sqlite3.Database('./sql/extra_db.sql');
+extra_db.run(`CREATE TABLE IF NOT EXISTS schedule (
+        monday TEXT DEFAULT 0,
+        tuesday TEXT DEFAULT 0,
+        wednesday TEXT DEFAULT 0,
+        thursday TEXT DEFAULT 0,
+        friday TEXT DEFAULT 0,
+        saturday TEXT DEFAULT 0,
+        sunday TEXT DEFAULT 0
+      );`);
+extra_db.close();
 
 // Creating command collection with previous collected files
 Bot.commands = new Discord.Collection();

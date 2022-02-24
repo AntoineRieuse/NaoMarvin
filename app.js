@@ -36,6 +36,10 @@ extra_db.run(`CREATE TABLE IF NOT EXISTS schedule (
         saturday TEXT DEFAULT 0,
         sunday TEXT DEFAULT 0
       );`);
+
+extra_db.run(`INSERT INTO schedule (monday, tuesday, wednesday, thursday, friday, saturday, sunday) VALUES ('09:00 - 18:00','09:00 - 18:00','09:00 - 18:00',
+'09:00 - 18:00','09:00 - 18:00','0 - 0','0 - 0')`);
+  
 extra_db.close();
 
 // Creating command collection with previous collected files

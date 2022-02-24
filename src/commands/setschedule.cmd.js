@@ -5,13 +5,14 @@ const description = "Update school's opening hours";
 
 const insert_db = (message, schedule) => {
     const db = new sqlite3.Database('./sql/extra_db.sql');
-        db.run(`INSERT INTO schedule (monday, tuesday, wednesday, thursday, friday, saturday, sunday) VALUES ('
-        `+ schedule.opening_monday +` - `+ schedule.closing_monday +`','`+ schedule.opening_tuesday +` - `+ schedule.closing_tuesday +`',
-        '`+ schedule.opening_wednesday +` - `+ schedule.closing_wednesday +`','`+ schedule.opening_thursday +` - `+ schedule.closing_thursday +`',
-        '`+ schedule.opening_friday +` - `+ schedule.closing_friday +`','`+ schedule.opening_saturday +` - `+ schedule.closing_saturday +`',
-        '`+ schedule.opening_sunday +` - `+ schedule.closing_sunday +`')`);
-        console.log('setschedule : updated to', schedule);
-        message.reply(`school's opening hours has been successfully updated :wink:`);
+    db.run(`UPDATE schedule SET monday='`+ schedule.opening_monday +` - `+ schedule.closing_monday +`', tuesday='`+ schedule.opening_tuesday +` - `+ schedule.closing_tuesday +`',
+    wednesday='`+ schedule.opening_wednesday +` - `+ schedule.closing_wednesday +`',thursday='`+ schedule.opening_thursday +` - `+ schedule.closing_thursday +`',
+    friday='`+ schedule.opening_friday +` - `+ schedule.closing_friday +`',saturday='`+ schedule.opening_saturday +` - `+ schedule.closing_saturday +`',
+    sunday='`+ schedule.opening_sunday +` - `+ schedule.closing_sunday +`';`);
+
+    console.log('setschedule : updated to', schedule);
+    message.reply(`school's opening hours has been successfully updated :wink:`);
+
     db.close();
 };
 

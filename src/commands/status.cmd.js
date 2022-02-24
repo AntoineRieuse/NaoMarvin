@@ -23,7 +23,6 @@ const display_infos = (message, given_username) => {
             const infosEmbed = new Discord.MessageEmbed()
                 .setColor("#2699e0")
                 .setTitle(username_to_disName(given_username))
-                .setThumbnail(process.env.ICON_URL)
                 .setFooter(process.env.SERVER_NAME);
 
             infosEmbed.addField("Email", given_username);

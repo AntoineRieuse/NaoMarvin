@@ -8,7 +8,6 @@ const display_sql = (message, datas) => {
     const infosEmbed = new Discord.MessageEmbed()
         .setColor("#2699e0")
         .setTitle("SQL DATABASE")
-        .setThumbnail(process.env.ICON_URL)
         .setFooter(process.env.SERVER_NAME);
 
     datas.forEach(data => {

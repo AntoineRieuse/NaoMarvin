@@ -13,7 +13,6 @@ const execute = (message, args) => {
                 const helpEmbed = new Discord.MessageEmbed()
                 .setColor("#2699e0")
                 .setTitle(`${process.env.COMPANY_NAME} accounts linked`)
-                .setThumbnail(process.env.ICON_URL)
                 .setFooter(process.env.SERVER_NAME);
                 if (rows != "" && typeof rows != 'undefined') {
                     for await (var row of rows) {

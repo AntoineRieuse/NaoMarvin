@@ -10,7 +10,6 @@ const execute = async (message, args) => {
   const helpEmbed = new Discord.MessageEmbed()
     .setColor("#2699e0")
     .setTitle("Help")
-    .setThumbnail(process.env.ICON_URL)
     .setFooter(process.env.SERVER_NAME);
 
   if (!args.length)

@@ -28,18 +28,21 @@ users_db.close();
 
 const extra_db = new sqlite3.Database('./sql/extra_db.sql');
 extra_db.run(`CREATE TABLE IF NOT EXISTS schedule (
-        monday TEXT DEFAULT 0,
-        tuesday TEXT DEFAULT 0,
-        wednesday TEXT DEFAULT 0,
-        thursday TEXT DEFAULT 0,
-        friday TEXT DEFAULT 0,
-        saturday TEXT DEFAULT 0,
-        sunday TEXT DEFAULT 0
+        monday TEXT NOT NULL DEFAULT 0,
+        tuesday TEXT NOT NULL DEFAULT 0,
+        wednesday TEXT NOT NULL DEFAULT 0,
+        thursday TEXT NOT NULL DEFAULT 0,
+        friday TEXT NOT NULL DEFAULT 0,
+        saturday TEXT NOT NULL DEFAULT 0,
+        sunday TEXT NOT NULL DEFAULT 0
       );`);
+extra_db.all("SELECT * FROM schedule;", [], (err, rows) => {
+  if (rows == "") { 
+    extra_db.run(`INSERT INTO schedule (monday, tuesday, wednesday, thursday, friday, saturday, sunday) VALUES ('09:00 - 18:00','09:00 - 18:00','09:00 - 18:00',
+    '09:00 - 18:00','09:00 - 18:00','0 - 0','0 - 0')`);
+  }
+});
 
-extra_db.run(`INSERT INTO schedule (monday, tuesday, wednesday, thursday, friday, saturday, sunday) VALUES ('09:00 - 18:00','09:00 - 18:00','09:00 - 18:00',
-'09:00 - 18:00','09:00 - 18:00','0 - 0','0 - 0')`);
-  
 extra_db.close();
 
 // Creating command collection with previous collected files

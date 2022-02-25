@@ -21,7 +21,7 @@ const display_infos = (message) => {
                 .setFooter(process.env.SERVER_NAME);
             
             Object.keys(schedule).forEach(day => {
-                if (schedule[day] == "0 - 0") {
+                if (schedule[day] == "00:00 - 00:00") {
                     schedule[day] = "Closed";
                 }
             });

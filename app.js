@@ -4,6 +4,8 @@ import Discord from "discord.js";
 import sqlite3 from 'sqlite3';
 import { background_tasks } from './src/core/background_tasks.js';
 
+console.log(new Date().toString());
+
 // Getting .env config
 dotenv.config();
 

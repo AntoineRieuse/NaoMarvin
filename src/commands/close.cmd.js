@@ -8,7 +8,7 @@ const execute = async (message) => {
             console.log("close: School status now set to: CLOSE");
             message.reply("school status is now set to closed! :no_entry:")
         } else {
-            message.reply("school status is already set to close :confused:");
+            message.reply("Woow... you can't do that :disappointed_relieved:");
         }
     } else {
         message.reply(

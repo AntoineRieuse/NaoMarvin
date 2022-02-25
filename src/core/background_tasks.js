@@ -49,13 +49,13 @@ const get_school_status = (callback) => {
 
 const update_school_status = (channel, status) => {
     if (status === 1) {
-        channel.setName("✅SCHOOL IS OPEN");
+        channel.setName("✅OPEN");
         const db = new sqlite3.Database('./sql/extra_db.sql');
         db.run('UPDATE schedule SET school_status=1');
         db.close();
         console.log("School status now set to: OPEN");
     } else if (status === 0) {
-        channel.setName("⛔️SCHOOL IS CLOSED");
+        channel.setName("⛔️CLOSED");
         const db = new sqlite3.Database('./sql/extra_db.sql');
         db.run('UPDATE schedule SET school_status=0');
         db.close();

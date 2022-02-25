@@ -3,7 +3,7 @@ import sqlite3 from 'sqlite3';
 const name = "setschedule";
 const description = "Admins: Update school's opening hours";
 
-const insert_db = (message, schedule) => {
+const insert_db = (schedule) => {
     const db = new sqlite3.Database('./sql/extra_db.sql');
     db.run(`UPDATE schedule SET monday='`+ schedule.opening_monday +` - `+ schedule.closing_monday +`', tuesday='`+ schedule.opening_tuesday +` - `+ schedule.closing_tuesday +`',
     wednesday='`+ schedule.opening_wednesday +` - `+ schedule.closing_wednesday +`',thursday='`+ schedule.opening_thursday +` - `+ schedule.closing_thursday +`',
@@ -11,12 +11,10 @@ const insert_db = (message, schedule) => {
     sunday='`+ schedule.opening_sunday +` - `+ schedule.closing_sunday +`';`);
 
     console.log('setschedule : updated to', schedule);
-    message.reply(`school's opening hours has been successfully updated :wink:`);
-
     db.close();
 };
 
-const execute = (message, args) => {
+const execute = (Bot, message, args) => {
     if (message.channel.id === process.env.ADMIN_BOT_STUFF_CHANNEL_ID) {
         if (message.member.roles.cache.has(process.env.BOT_ADMIN_ROLE_ID)) {
             if (args.length >= 14) {
@@ -42,8 +40,10 @@ const execute = (message, args) => {
                     (schedule.opening_thursday.length === 5) && (schedule.closing_thursday.length === 5) && (schedule.opening_friday.length === 5) && (schedule.closing_friday.length === 5) && 
                     (schedule.opening_saturday.length === 5) && (schedule.closing_saturday.length === 5) && (schedule.opening_sunday.length === 5) && (schedule.closing_sunday.length === 5))
                     {
-                        insert_db(message, schedule);
-                        process.exit(0);
+                        insert_db(schedule);
+                        message.reply(`school's opening hours has been successfully updated :wink:`);
+                        Bot.destroy();
+                        Bot.login(process.env.TOKEN);
                     }
                     else {
                         message.reply(`please write time in format hh:mm :grimacing:`);

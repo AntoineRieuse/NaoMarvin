@@ -72,12 +72,19 @@ Bot.on("message", (message) => {
   // Detecting bot prefix
   if (!message.content.startsWith(prefix) || message.content.length <= 1 || message.author.bot) return;
 
+  
   // Parsing arguments from command
   const args = message.content.slice(prefix.length).trim().split(/ +/);
   const command = args.shift().toLocaleLowerCase();
-
+  
   // Execute typed command if exists
-  if (commands?.find((cmd) => cmd === command)) {
+  if (message.content.startsWith(prefix+"setschedule")) {
+    try {
+      Bot.commands.get(command).execute(Bot, message, args);
+    } catch (err) {
+      message.reply("Hmmm... 🤔 Something went wrong with this command...");
+    }
+  } else if (commands?.find((cmd) => cmd === command)) {
     try {
       Bot.commands.get(command).execute(message, args);
     } catch (err) {

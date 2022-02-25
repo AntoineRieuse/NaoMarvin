@@ -85,7 +85,7 @@ const set_school_statut = (Bot) => {
 }
 
 const background_tasks = async (Bot) => {
-    setInterval(() => set_school_statut(Bot), 240000);
+    setInterval(() => set_school_statut(Bot), 60000);
     return;
 }
 

@@ -8,7 +8,7 @@ const execute = async (message) => {
             const channel = await message.guild.channels.cache.get(process.env.SCHOOL_STATUS_DISPLAY_CHANNEL, false);
             channel.setName("⛔️SCHOOL IS CLOSED");
             console.log("close: School status now set to: CLOSE");
-            message.reply("school status is now set to close! :no_entry:")
+            message.reply("school status is now set to closed! :no_entry:")
         } else {
             message.reply("school status is already set to close :confused:");
         }

@@ -36,9 +36,20 @@ const execute = (message, args) => {
                     opening_sunday: args[12],
                     closing_sunday: args[13]
                 };
-                insert_db(message, schedule);
+
+                if ((schedule.opening_monday.length === 5) && (schedule.closing_monday.length === 5) && (schedule.opening_tuesday.length === 5) &&
+                    (schedule.closing_tuesday.length === 5) && (schedule.opening_wednesday.length === 5) && (schedule.closing_wednesday.length === 5) && 
+                    (schedule.opening_thursday.length === 5) && (schedule.closing_thursday.length === 5) && (schedule.opening_friday.length === 5) && (schedule.closing_friday.length === 5) && 
+                    (schedule.opening_saturday.length === 5) && (schedule.closing_saturday.length === 5) && (schedule.opening_sunday.length === 5) && (schedule.closing_sunday.length === 5))
+                    {
+                        insert_db(message, schedule);
+                        process.exit(0);
+                    }
+                    else {
+                        message.reply(`please write time in format hh:mm :grimacing:`);
+                    }
             } else {
-                message.reply(`you did an error in your syntax :confused:. Please use ${process.env.CMD_PREFIX}setschedule <monday opening hour> <monday closing hour> ...`);
+                message.reply(`you did an error in your syntax :confused:. Please use ${process.env.CMD_PREFIX}setschedule <monday opening hour hh:mm> <monday closing hour hh:mm> ... <sunday opening hour hh:mm> <sunday closing hour hh:mm>`);
             }
         } else {
             message.reply("Woow... you can't do that :disappointed_relieved:");

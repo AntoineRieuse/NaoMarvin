@@ -6,6 +6,9 @@ const get_cur_day = () => {
     let cur_day = "";
 
     switch (cur_day_nbr) {
+        case 0:
+            cur_day = "sunday";
+            break;
         case 1:
             cur_day = "monday";
             break;
@@ -23,9 +26,6 @@ const get_cur_day = () => {
             break;
         case 6:
             cur_day = "saturday";
-            break;
-        case 7:
-            cur_day = "sunday";
             break;
     }
     return(cur_day);

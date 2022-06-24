@@ -58,18 +58,18 @@ const execute = (message, args) => {
             const emails_domains = process.env.EMAILS_DOMAINS.split(',');
             var username;
 
-            if (args[1] === "pge") {
+            if (args[1] === "it") {
                 username = args[0] + '@' + emails_domains[0];
                 insert_db(message, username);
             } else if (args[1] === "digital") {
                 username = args[0] + '@' + emails_domains[1];
                 insert_db(message, username);
             } else {
-                message.reply(`you did an error in your syntax :confused:. Please use ${process.env.CMD_PREFIX}link <firstname(int).lastname> pge | digital`);
+                message.reply(`you did an error in your syntax :confused:. Please use ${process.env.CMD_PREFIX}link <firstname(int).lastname> <it | digital>`);
             }
 
         } else {
-            message.reply(`you did an error in your syntax :confused:. Please use ${process.env.CMD_PREFIX}link <firstname(int).lastname> pge | digital`);
+            message.reply(`you did an error in your syntax :confused:. Please use ${process.env.CMD_PREFIX}link <firstname(int).lastname> <it | digital>`);
         }
     } else {
         message.reply(

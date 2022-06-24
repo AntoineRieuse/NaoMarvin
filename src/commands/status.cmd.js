@@ -38,8 +38,20 @@ const display_infos = (message, given_username) => {
 const execute = (message, args) => {
     if (message.channel.id === process.env.BOT_STUFF_CHANNEL_ID || message.channel.id === process.env.ADMIN_BOT_STUFF_CHANNEL_ID) {
         if (message.member.roles.cache.has(process.env.BOT_ADMIN_ROLE_ID)) {
-            if (args.length === 1) {
-                display_infos(message, args[0] + '@' + process.env.EMAILS_DOMAIN);
+            if (args.length === 2) {
+                const emails_domains = process.env.EMAILS_DOMAINS.split(',');
+                var username;
+
+
+                if (args[1] === "pge") {
+                    username = args[0] + '@' + emails_domains[0];
+                    display_infos(message, username)
+                } else if (args[1] === "digital") {
+                    username = args[0] + '@' + emails_domains[1];
+                    display_infos(message, username)
+                } else {
+                    message.reply(`you did an error in your syntax :confused:. Please use ${process.env.CMD_PREFIX}status <firstname(int).lastname> pge | digital`);
+                }
             } else {
                 message.reply(`you did an error in your syntax :confused:. Please use ${process.env.CMD_PREFIX}status <firstname(int).lastname>`);
             }

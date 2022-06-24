@@ -32,9 +32,8 @@ var transporter = nodemailer.createTransport({
       });
 }
 
-const rm_db = (message, given_username, user_to_remove) => {
+const rm_db = (message, given_username) => {
     const db = new sqlite3.Database('./sql/db.sql');
-    const role = message.guild.roles.cache.find(r => r.id === process.env.VERIFIED_ROLE_ID);
     db.all("SELECT discord_id, linked FROM users WHERE ad_username='"+ given_username +"';", [], async (err, rows) => {
         if (rows != "") {
             db.run("DELETE FROM users WHERE ad_username='"+ given_username +"';");
@@ -43,8 +42,6 @@ const rm_db = (message, given_username, user_to_remove) => {
             if (rows[0].linked == 1) {
                 const get_user = await message.guild.client.users.fetch(rows[0].discord_id);
                 message.reply(`${process.env.COMPANY_NAME} account ${given_username} and Discord account ${await message.guild.client.users.cache.get(get_user.id)} has been sucessfully unlinked`);
-                await user_to_remove.setNickname(null);
-                await user_to_remove.roles.remove(role);
             } else {
                 message.reply(`linking of ${process.env.COMPANY_NAME} account ${given_username} has been sucessfully canceled`);
             }
@@ -59,11 +56,20 @@ const execute = (message, args) => {
     if (message.channel.id === process.env.BOT_STUFF_CHANNEL_ID || message.channel.id === process.env.ADMIN_BOT_STUFF_CHANNEL_ID) {
         if (message.member.roles.cache.has(process.env.BOT_ADMIN_ROLE_ID)) {
             if (args.length === 2) {
-                const given_username = args[0] + '@' + process.env.EMAILS_DOMAIN;
-                const user_to_remove = message.mentions.members.first()
-                rm_db(message, given_username, user_to_remove);
+                const emails_domains = process.env.EMAILS_DOMAINS.split(',');
+                var username;
+
+                if (args[1] === "pge") {
+                    username = args[0] + '@' + emails_domains[0];
+                    rm_db(message, username);
+                } else if (args[1] === "digital") {
+                    username = args[0] + '@' + emails_domains[1];
+                    rm_db(message, username);
+                } else {
+                    message.reply(`you did an error in your syntax :confused:. Please use ${process.env.CMD_PREFIX}unlink <firstname(int).lastname> pge | digital`);
+                }
             } else {
-                message.reply(`you did an error in your syntax :confused:. Please use ${process.env.CMD_PREFIX}unlink <firstname(int).lastname> @<Discord user>`);
+                message.reply(`you did an error in your syntax :confused:. Please use ${process.env.CMD_PREFIX}unlink <firstname(int).lastname> pge | digital`);
             }
         } else {
             message.reply("Woow... you can't do that :disappointed_relieved:");
